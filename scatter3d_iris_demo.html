@@ -1,0 +1,32 @@
+<html>
+	<body>
+		<script type="text/javascript" src="lib/three.min.js"></script>
+		<script type="text/javascript" src="lib/d3.min.js"></script>
+		<script type="text/javascript" src="lib/numeric-1.2.6.min.js"></script>
+		<script type="text/javascript" src="lib/jquery-2.2.1.min.js"></script>
+
+		<script type="text/javascript" src="src/uitls.js"></script>
+		<script type="text/javascript" src="src/scatter3d.js"></script>		
+		<script>
+
+		// load data
+		var data = convertToFloat2d(loadData("data/iris.csv"));
+
+		// get data with out label and center
+	    var dataWithoutLabel = centering(data.map(function(d) {return d.slice(0, 4);}));
+
+	    // get data labels
+	    var labels = data.map(function(d) {return d.slice(4,5);});
+
+	    // get PCA components of data
+	    var pcaW = pca(dataWithoutLabel);
+
+	    // project data onto first three PCA component
+	    var projData3d = getProjection(dataWithoutLabel, pcaW);		
+
+	    // generate 3d scatter plot
+	    scatter3d(data, labels);
+
+		</script>
+	</body>
+</html>
